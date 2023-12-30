@@ -28,6 +28,7 @@ addBtn.addEventListener('click', (event) => {
 
 const popUpForm = document.querySelector('#popUpForm');
 
+// book constructor
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -39,11 +40,13 @@ function Book(title, author, pages, read) {
     };
 };
 
+// adds book object values to myLibrary array and to table
 function addBookToLibrary(book) {
     myLibrary.push(book);
     addBookToTable(book);
 };
 
+// creates new Book object
 function createBook() {
     const title = document.querySelector('#title').value;
     const author = document.querySelector('#author').value;
@@ -55,6 +58,7 @@ function createBook() {
     popUpForm.style.display = 'none';
 };
 
+// checks true or false value if read checkbox has been clicked
 function toggleRead() {
     let isRead = false;
     const readCheckbox = document.querySelector('#read');
@@ -62,6 +66,7 @@ function toggleRead() {
     return isRead;
 };
 
+// clear all user inputs in pop-up form once add button has been clicked
 function clearInputs() {
     document.querySelector('#title').value = '';
     document.querySelector('#author').value = '';
@@ -69,6 +74,7 @@ function clearInputs() {
     document.querySelector('#read').checked = false;
 };
 
+// adds book values to table
 function addBookToTable(book) {
     const table = document.querySelector('#libraryTable');
     const newRow = table.insertRow();
@@ -77,11 +83,24 @@ function addBookToTable(book) {
     const authorCell = newRow.insertCell(1);
     const pagesCell = newRow.insertCell(2);
     const readCell = newRow.insertCell(3);
+    const removeCell = newRow.insertCell(4);
     
     titleCell.textContent = book.title;
     authorCell.textContent = book.author;
     pagesCell.textContent = book.pages;
     readCell.textContent = book.read;
+    removeCell.appendChild(removeButton());
 
 
 };
+
+function removeBook() {
+
+}
+
+// creates remove book button for each book in table
+function removeButton() {
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = 'Remove book';
+    return removeBtn;
+}
