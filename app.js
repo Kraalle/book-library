@@ -1,13 +1,8 @@
-/*
-1. page opens up with title new book option
-2. clicking add book brings up add title, author, pages, read
-3. When all text is filled, I need input values to be grabbed, turned into and object, then added to library
-4. Once added to library I need to display values in a table
-*/
+//fix update table and potentially fix how object handles which ID it receives (update to indexOf instead??).
 
 
 const myLibrary = [];
-let nextBookId = 1;
+let nextBookId = 0;
 
 // Button event listeners
 const newBtn = document.querySelector("#newBtn");
@@ -33,8 +28,7 @@ cancelBtn.addEventListener('click', (event) => {
     table.style.display = 'block';
     clearInputs();
 
-})
-
+});
 
 const popUpForm = document.querySelector('#popUpForm');
 
@@ -99,18 +93,41 @@ function addBookToTable(book) {
     authorCell.textContent = book.author;
     pagesCell.textContent = book.pages;
     readCell.textContent = book.read;
-    removeCell.appendChild(removeButton());
+    removeCell.appendChild(removeButton(book.id));
 
 
 };
 
-function removeBook() {
+function removeBook(removeBtn) {
+    const bookId = parseInt(removeBtn.getAttribute('data-book-id'));
+    removeBookById(bookId);
+};
 
+function removeBookById(bookId) {
+    const indexToRemove = myLibrary.findIndex(book => book.id === bookId);
+    if (indexToRemove !== -1) {
+        myLibrary.splice(indexToRemove, 1);
+        updateTable();
+    }
 }
 
 // creates remove book button for each book in table
-function removeButton() {
+function removeButton(bookId) {
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Remove book';
+    removeBtn.setAttribute('data-book-id', bookId);
+    removeBtn.addEventListener('click', () => removeBook(removeBtn));
     return removeBtn;
+};
+
+function updateTable() {
+    const table = document.querySelector('#libraryTable');
+    const rowCount = table.rows.length;
+    for (let i = rowCount - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+
+    for(let book of myLibrary) {
+        addBookToTable(book);
+    }
 }
