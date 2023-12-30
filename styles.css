@@ -32,3 +32,9 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #e5e5e5;
 }
+
+.form-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}

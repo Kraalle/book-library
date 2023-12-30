@@ -25,6 +25,16 @@ addBtn.addEventListener('click', (event) => {
     table.style.display = 'block';
 });
 
+const cancelBtn = document.querySelector('#cancelBtn');
+cancelBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const table = document.querySelector('#libraryTable');
+    popUpForm.style.display = 'none';
+    table.style.display = 'block';
+    clearInputs();
+
+})
+
 
 const popUpForm = document.querySelector('#popUpForm');
 
@@ -74,7 +84,7 @@ function clearInputs() {
     document.querySelector('#read').checked = false;
 };
 
-// adds book values to table
+// creates table rows and adds book values to table
 function addBookToTable(book) {
     const table = document.querySelector('#libraryTable');
     const newRow = table.insertRow();
