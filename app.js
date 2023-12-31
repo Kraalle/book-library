@@ -1,5 +1,3 @@
-//fix update table and potentially fix how object handles which ID it receives (update to indexOf instead??).
-
 
 const myLibrary = [];
 let nextBookId = 0;
@@ -88,14 +86,15 @@ function addBookToTable(book) {
     const pagesCell = newRow.insertCell(2);
     const readCell = newRow.insertCell(3);
     const removeCell = newRow.insertCell(4);
-    
+    const readBtnCell = newRow.insertCell(5);
+
+    const readBtn = readButton(book);
     titleCell.textContent = book.title;
     authorCell.textContent = book.author;
     pagesCell.textContent = book.pages;
     readCell.textContent = book.read;
     removeCell.appendChild(removeButton(book.id));
-
-
+    readBtnCell.appendChild(readBtn);
 };
 
 //fetches remove button id and removes book based on array position
@@ -117,7 +116,7 @@ function removeButton(bookId) {
     return removeBtn;
 };
 
-// deletes all rows and readds books
+// deletes all rows and reads books
 function updateTable() {
     const table = document.querySelector('#libraryTable');
     const rowCount = table.rows.length;
@@ -128,4 +127,27 @@ function updateTable() {
     for (let book of myLibrary) {
         addBookToTable(book);
     }
+};
+
+// adds clickable read book button to table if user decides they have read book after inputting book
+function readButton(book) {
+    const readBtn = document.createElement('button');
+    if (book.read === 'not read') {
+        readBtn.textContent = 'Read book';
+    } else {
+        readBtn.textContent = 'Unread book';
+    }
+    readBtn.setAttribute('read-button-id', book.id);
+    readBtn.addEventListener('click', () => readBook(readBtn));
+    return readBtn;
+}
+
+function readBook(readBtn) {
+    const bookId = readBtn.getAttribute('read-button-id');
+    if (myLibrary[bookId].read === 'read') {
+        myLibrary[bookId].read = 'not read';
+    } else if (myLibrary[bookId].read === 'not read') {
+        myLibrary[bookId].read = 'read';
+    }
+    updateTable();
 }
