@@ -98,20 +98,17 @@ function addBookToTable(book) {
 
 };
 
+//fetches remove button id and removes book based on array position
 function removeBook(removeBtn) {
     const bookId = parseInt(removeBtn.getAttribute('data-book-id'));
-    removeBookById(bookId);
-};
-
-function removeBookById(bookId) {
     const indexToRemove = myLibrary.findIndex(book => book.id === bookId);
     if (indexToRemove !== -1) {
         myLibrary.splice(indexToRemove, 1);
         updateTable();
     }
-}
+};
 
-// creates remove book button for each book in table
+// creates remove book button for each book in table and attaches the array position as id to remove button
 function removeButton(bookId) {
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Remove book';
@@ -120,14 +117,15 @@ function removeButton(bookId) {
     return removeBtn;
 };
 
+// deletes all rows and readds books
 function updateTable() {
     const table = document.querySelector('#libraryTable');
     const rowCount = table.rows.length;
-    for (let i = rowCount - 1; i > 0; i--) {
+    for (let i = rowCount - 1; i >= 0; i--) {
         table.deleteRow(i);
     }
 
-    for(let book of myLibrary) {
+    for (let book of myLibrary) {
         addBookToTable(book);
     }
 }
