@@ -1,4 +1,3 @@
-
 const myLibrary = [];
 let nextBookId = 0;
 
@@ -30,17 +29,22 @@ cancelBtn.addEventListener('click', (event) => {
 
 const popUpForm = document.querySelector('#popUpForm');
 
-// book constructor
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = (read === true) ? 'read' : 'not read';
-    this.id = nextBookId++;
-    this.info = function () {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}. ${this.id}`
-    };
-};
+// book class
+class Book {
+    constructor(title, author, pages, read) {
+        console.log('using class inistead of function');
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = (read === true) ? 'read' : 'not read';
+        this.id = nextBookId++;
+    }
+
+    info() {
+        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}. ${this.id}`;
+    }
+
+}
 
 // adds book object values to myLibrary array and to table
 function addBookToLibrary(book) {
